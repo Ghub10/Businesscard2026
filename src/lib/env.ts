@@ -23,6 +23,10 @@ function looksLikeJwt(key: string): boolean {
   return key.startsWith("eyJ") && parts.length === 3 && parts.every((p) => p.length > 0);
 }
 
+function looksLikeNewApiKey(key: string): boolean {
+  return key.startsWith("sb_publishable_");
+}
+
 function parseSupabaseProjectUrl(url: string): URL | null {
   try {
     const u = new URL(url);
@@ -50,7 +54,7 @@ export function getSupabaseEnvIssue(): SupabaseEnvIssue {
   const placeholderKey = /^your_anon_key$/i.test(key);
   if (placeholderUrl || placeholderKey) return "placeholder";
   if (!parseSupabaseProjectUrl(url)) return "invalid_url";
-  if (!looksLikeJwt(key)) return "invalid_key";
+  if (!looksLikeJwt(key) && !looksLikeNewApiKey(key)) return "invalid_key";
   return null;
 }
 

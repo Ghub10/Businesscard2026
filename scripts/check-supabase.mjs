@@ -35,6 +35,10 @@ function looksLikeJwt(key) {
   return key.startsWith("eyJ") && parts.length === 3 && parts.every((p) => p.length > 0);
 }
 
+function looksLikeNewApiKey(key) {
+  return key.startsWith("sb_publishable_");
+}
+
 function parseProjectUrl(url) {
   try {
     const u = new URL(url);
@@ -67,8 +71,10 @@ if (!parseProjectUrl(url)) {
   );
   process.exit(1);
 }
-if (!looksLikeJwt(key)) {
-  console.error("VITE_SUPABASE_ANON_KEY should be the anon public JWT (starts with eyJ).");
+if (!looksLikeJwt(key) && !looksLikeNewApiKey(key)) {
+  console.error(
+    "VITE_SUPABASE_ANON_KEY should be the anon public JWT (starts with eyJ) or the publishable key (starts with sb_publishable_)."
+  );
   process.exit(1);
 }
 

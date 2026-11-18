@@ -1,0 +1,309 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ---------- Design tokens (change colors here) ---------- */
+.bc-page {
+  --bc-accent: #ffd43b; /* yellow band */
+  --bc-bg: #fafaf7; /* card background */
+  --bc-ink: #16181d; /* main text + dark button */
+  --bc-ink-2: #3d4049; /* title */
+  --bc-muted: #5f626b; /* location, small text */
+  --bc-line: #e4e4dd; /* borders */
+  --bc-line-soft: #eeeee8; /* row dividers */
+  --bc-surface: #ffffff; /* white boxes */
+  --bc-page-bg: #e9e9e4; /* behind the card on big screens */
+
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bc-page-bg);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  color: var(--bc-ink);
+  perspective: 1600px;
+}
+
+/* ---------- Card + flip ---------- */
+.bc-flipper {
+  position: relative;
+  width: min(390px, 100vw);
+  height: min(844px, 100dvh);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.bc-flipper.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.bc-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bc-bg);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.bc-back {
+  transform: rotateY(180deg);
+}
+
+/* Rounded card with shadow on screens wider than a phone */
+@media (min-width: 480px) {
+  .bc-flipper {
+    height: min(844px, calc(100dvh - 48px));
+  }
+  .bc-face {
+    border-radius: 28px;
+    box-shadow: 0 24px 60px rgba(22, 24, 29, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bc-flipper {
+    transition: none;
+  }
+}
+
+/* ---------- Yellow band ---------- */
+.bc-band {
+  flex-shrink: 0;
+  background: var(--bc-accent);
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+.bc-band--tall {
+  height: 150px;
+  padding-top: 24px;
+}
+.bc-band--short {
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+.bc-brand {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+/* ---------- Front ---------- */
+.bc-photo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: -84px;
+}
+.bc-photo {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  border: 6px solid var(--bc-bg);
+  box-sizing: border-box;
+  object-fit: cover;
+  background: #ececE6;
+}
+
+.bc-identity {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 24px;
+  text-align: center;
+}
+.bc-name {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.bc-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--bc-ink-2);
+}
+.bc-location {
+  margin: 2px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: var(--bc-muted);
+}
+.bc-divider {
+  width: 48px;
+  height: 2px;
+  background: var(--bc-accent);
+  margin: 16px 0 10px;
+}
+.bc-skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.bc-chip {
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid #dcdcd4;
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--bc-surface);
+}
+.bc-cert {
+  margin: 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #4a4d55;
+}
+
+/* ---------- Buttons ---------- */
+.bc-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 24px 24px;
+}
+.bc-actions--back {
+  padding: 0;
+  margin-top: auto;
+}
+.bc-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 54px;
+  border-radius: 14px;
+  background: var(--bc-ink);
+  color: var(--bc-bg);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.bc-primary:hover {
+  background: #000;
+}
+.bc-primary:active {
+  transform: scale(0.98);
+}
+.bc-flip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bc-ink-2);
+  cursor: pointer;
+}
+.bc-flip:hover {
+  color: var(--bc-ink);
+}
+.bc-primary:focus-visible,
+.bc-flip:focus-visible,
+.bc-link:focus-visible {
+  outline: 3px solid var(--bc-ink);
+  outline-offset: 2px;
+}
+
+/* ---------- Back ---------- */
+.bc-back-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px 24px 24px;
+  min-height: 0;
+}
+.bc-connect {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+.bc-links {
+  display: flex;
+  flex-direction: column;
+  background: var(--bc-surface);
+  border: 1px solid var(--bc-line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.bc-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 56px;
+  padding: 0 18px;
+  font-size: 16px;
+  color: var(--bc-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--bc-line-soft);
+}
+.bc-link:last-child {
+  border-bottom: 0;
+}
+.bc-link:hover {
+  background: #f6f6f1;
+}
+.bc-qr {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bc-surface);
+  border: 1px solid var(--bc-line);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.bc-qr img {
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+.bc-qr-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.bc-qr-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #4a4d55;
+}
+
+/* Short phones: tighten spacing so nothing gets cut off */
+@media (max-height: 720px) {
+  .bc-band--tall {
+    height: 120px;
+  }
+  .bc-photo {
+    width: 132px;
+    height: 132px;
+  }
+  .bc-photo-wrap {
+    margin-top: -66px;
+  }
+  .bc-back-body {
+    padding-top: 24px;
+    gap: 14px;
+  }
+  .bc-link {
+    height: 48px;
+  }
+}
